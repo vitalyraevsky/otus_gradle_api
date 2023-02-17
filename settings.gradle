@@ -1,0 +1,25 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("VERSION_CATALOGS")
+
+rootProject.name = "GradleOtus"
+include ':app'
+
+include ":core"
+project(":core").projectDir = file("$rootDir/sources/core")
+
+println("Hello from init")

@@ -1,0 +1,23 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.21'
+}
+
+repositories {
+    gradlePluginPortal()
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation gradleApi()
+}
+
+gradlePlugin {
+    plugins {
+        SimplePlugin {
+            id = "SimplePlugin"
+            implementationClass = "ru.otus.gradleotus.SimplePlugin"
+        }
+    }
+}

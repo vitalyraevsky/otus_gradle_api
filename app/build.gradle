@@ -1,0 +1,147 @@
+import ru.otus.gradleotus.AppConfig
+
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+
+/*
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+*/
+    id 'SimplePlugin'
+}
+
+apply from: "$project.rootDir/buildScripts/android_config.gradle"
+apply from: "$project.rootDir/buildScripts/deps.gradle"
+
+android {
+    compileSdk libs.versions.compileSdk.get() as Integer
+    //compileSdk AppConfig.androidConpileSdk
+    //compileSdk androidConpileSdk
+
+    signingConfigs {
+
+    }
+
+    defaultConfig {
+        applicationId "ru.otus.gradleotus"
+        minSdk androidMinSdk
+        targetSdk androidTargetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    flavorDimensions "service" , "type"
+    productFlavors {
+        google {
+            dimension "service"
+
+        }
+        huawei {
+            dimension "service"
+
+        }
+        free {
+            dimension "type"
+
+        }
+        paid {
+            dimension "type"
+
+        }
+    }
+}
+
+dependencies {
+    //implementation project(":core")
+
+    implementation projects.core
+    implementation libs.androidx.core
+
+    implementation libs.bundles.androidx
+
+    //implementation AndroidXDeps.core
+
+    //implementation AndroidXDeps.all()
+/*
+    implementation materialDependency
+    implementation androidXDependencies.values()
+*/
+/*
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+*/
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+
+tasks.register("hello") {
+    println("Hello from config")
+    mustRunAfter "clearHello"
+    group = "otus"
+    doFirst {
+        println("Hello from action")
+    }
+}
+
+def someBoolean = false
+
+tasks.register("clearHello") {
+    onlyIf {
+        someBoolean
+    }
+    group = "otus"
+    doFirst {
+        println("Hello from clear")
+    }
+}
+
+tasks.register("world") {
+    group = "otus"
+    dependsOn "hello"
+    finalizedBy "try"
+    doFirst {
+        println("Hello from world")
+        throw new RuntimeException("We failed :(")
+    }
+}
+
+tasks.register("try") {
+    group = "otus"
+    doFirst {
+        println("Hello from try anyway")
+    }
+}
+
+tasks.register("proxy") {
+    group = "otus"
+    dependsOn "world"
+    dependsOn "try"
+}
+
+tasks.named("proxy").configure {
+    enabled = false
+}

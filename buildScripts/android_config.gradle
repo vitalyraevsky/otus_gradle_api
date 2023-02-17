@@ -1,0 +1,5 @@
+ext {
+    androidMinSdk = 23
+    androidTargetSdk = 33
+    androidConpileSdk = 33
+}

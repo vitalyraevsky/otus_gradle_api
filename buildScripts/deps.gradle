@@ -1,0 +1,15 @@
+ext {
+
+    androidxCoreVer = "1.9.0"
+    androidxAppcompatVer = "1.6.1"
+    materialVer = "1.8.0"
+    androidxConstraintlayoutVer = "2.1.4"
+
+    materialDependency = "com.google.android.material:material:$materialVer"
+
+    androidXDependencies = [
+            "core": "androidx.core:core-ktx:$androidxCoreVer",
+            "appcompat": "androidx.appcompat:appcompat:$androidxAppcompatVer",
+            "constraintlayout": "androidx.constraintlayout:constraintlayout:$androidxConstraintlayoutVer"
+    ]
+}

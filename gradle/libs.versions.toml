@@ -1,0 +1,28 @@
+[versions]
+minSdk = "23"
+compileSdk = "33"
+targetSdk = "33"
+
+gradlePlugin = "7.3.1"
+kotlin = "1.7.21"
+
+androidx-core = "1.9.0"
+androidx-appcompat = "1.6.1"
+androidx-constraintlayout = "2.1.4"
+
+material = "1.8.0"
+[libraries]
+
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-constrainLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
+
+[bundles]
+androidx = ["androidx-core", "androidx-appcompat", "androidx-constrainLayout"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "gradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "gradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

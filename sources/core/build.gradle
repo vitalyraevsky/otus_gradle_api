@@ -1,0 +1,13 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply from: "$project.rootDir/buildScripts/android_config.gradle"
+apply from: "$project.rootDir/buildScripts/deps.gradle"
+
+dependencies {
+    implementation projects.core
+
+    implementation materialDependency
+}
