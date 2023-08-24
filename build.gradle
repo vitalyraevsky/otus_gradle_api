@@ -13,3 +13,91 @@ plugins {
 tasks.register("clean" , Delete) {
     it.delete rootProject.buildDir
 }
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+/*plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+}
+
+tasks.register("clean", Delete ) {
+    it.delete(rootProject.buildDir)
+}*/
+
+tasks.register("simpletask") {
+    group = "Lesson"
+    println("Gradle config stage")
+    doFirst {
+        println("Gradle action first")
+    }
+    doLast {
+        println("Gradle action last")
+    }
+}
+//dependsOn "simpletask"
+
+tasks.register("simpletask_2") {
+    group = "Lesson"
+    doFirst {
+        println("Gradle action 2")
+    }
+}
+
+tasks.register("simpletask_3") {
+    group = "Lesson"
+    mustRunAfter simpletask_2
+    doFirst {
+        println("Gradle action 3")
+    }
+}
+
+
+tasks.register("proxy") {
+    dependsOn "simpletask_2"
+    dependsOn "simpletask_3"
+}
+
+tasks.register("printAllProjects") {
+    group = "Lesson"
+    doFirst {
+        println("Start execution")
+    }
+    doLast {
+        println("Root project name is: ${project.name}")
+        project.subprojects.forEach { project ->
+            println("Chld project name is: ${project.name}")
+        }
+    }
+}
+
+
+tasks.create("bad_task") {
+    group = "Lesson"
+    println("Bad Task")
+    doFirst {
+
+    }
+}
+
+task bad_task_2 {
+    group = "Lesson"
+    println("Bad Task 2")
+    doFirst {
+
+    }
+}
+
+tasks.register("printAllProjectNames") {
+    group = "project names "
+    description = "Prints all projects names "
+    doFirst {
+        println(" Start execution ")
+    }
+    doLast {
+        println("Root project name is: ${project.name}")
+        project.subprojects.forEach { project ->
+            println("Child project name is: ${project.name}")
+        }
+    }
+}

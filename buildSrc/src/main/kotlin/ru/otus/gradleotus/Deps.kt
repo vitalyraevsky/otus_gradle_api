@@ -3,6 +3,8 @@ package ru.otus.gradleotus
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
+const val kotlinVersion = "1.8.10"
+
 object AndroidXDeps {
 
     object Versions {

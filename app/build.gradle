@@ -27,6 +27,9 @@ android {
         applicationId "ru.otus.gradleotus"
         minSdk androidMinSdk
         targetSdk androidTargetSdk
+        //minSdk libs.versions.minSdk.get() as Integer
+        //targetSdk libs.versions.targetSdk.get() as Integer
+
         versionCode 1
         versionName "1.0"
 
@@ -92,6 +95,42 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 */
+
+/*    debugImplementation "myLib-snapshot"
+    releaseImplementation "myLib"
+
+    googlePaidImplementation "myLib"
+    huaweiFreeImplementation "myLib-huawei"*/
+
+    /*
+
+    implementation project(':mylibrary')
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.core:core-ktx:1.9.0'
+
+
+    implementation('some-library') {
+        exclude group: 'com.example.imgtools', module: 'native'
+    }
+*/
+
+    //debugImplementation 'some-snapshot-library'
+    //releaseImplementation 'some-library'
+
+    //freeImplementation project(':freeModule')
+    //paidImplementation project(':paidModule')
+
+/*    implementation projects.module
+
+    implementation androidxCoreKtxDependency
+
+    implementation libs.androidx.core
+
+    implementation libs.bundles.androidx
+    */
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -144,4 +183,107 @@ tasks.register("proxy") {
 
 tasks.named("proxy").configure {
     enabled = false
+}
+
+//------
+
+
+tasks.register("hello") {
+    doLast {
+        println "Hello world!"
+    }
+    doFirst {
+        println "So"
+    }
+}
+
+tasks.register("challenge") {
+    doFirst {
+        println "1 starting task challenge"
+    }
+    doFirst {
+        println "2 starting task challenge"
+    }
+    doFirst {
+        println "3 starting task challenge"
+    }
+    doLast {
+        println "1 finishing task challenge"
+    }
+    doLast {
+        println "2 finishing task challenge"
+    }
+    doLast {
+        println "3 finishing task challenge"
+    }
+}
+
+
+tasks.register("exception_task") {
+    group = "Lesson"
+    finalizedBy finalized_task
+    doFirst {
+        throw new RuntimeException("We failed :(")
+        println("Unreacheble")
+    }
+}
+
+tasks.register("finalized_task") {
+    group = "Lesson"
+    doFirst {
+        println("Task executed anyway")
+    }
+}
+
+def someBoolean = false
+
+tasks.register("only_task") {
+    group = "Lesson"
+    onlyIf {
+        someBoolean
+    }
+    doFirst {
+        println("Task executed")
+    }
+}
+
+tasks.register("alter_only_task") {
+    group = "Lesson"
+    dependsOn "only_task"
+    doFirst {
+        println("Task alter executed")
+    }
+}
+
+tasks.named("alter_only_task").configure {
+    enabled = false
+    doLast {
+        println("Task alter executed Last")
+    }
+}
+
+
+tasks.register('OTUSprint2') {
+    group = "Otus"
+    doFirst {
+        println "Otus 2 first"
+    }
+    doLast {
+        println "Otus 2 last"
+    }
+}
+
+tasks.register('OTUSprint') {
+    dependsOn "OTUSprint2"
+    group = "Otus"
+    doFirst {
+        println "Otus"
+    }
+}
+
+tasks.register('hello_ext') {
+    mustRunAfter OTUSprint
+    doLast {
+        println 'Hello world!'
+    }
 }

@@ -23,3 +23,9 @@ include ":core"
 project(":core").projectDir = file("$rootDir/sources/core")
 
 println("Hello from init")
+
+sourceControl {
+    gitRepository("https://github.com/gradle/native-samples-cpp-library.git") {
+        producesModule("org.gradle.cpp-samples:utilities")
+    }
+}
