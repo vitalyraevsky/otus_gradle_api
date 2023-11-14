@@ -37,10 +37,10 @@ android {
     }
 
     buildTypes {
-        debug {
+        named("debug") {
 
         }
-        release {
+        named("release") {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -55,21 +55,17 @@ android {
 
     flavorDimensions "service" , "type"
     productFlavors {
-        google {
+        register("google") {
             dimension "service"
-
         }
-        huawei {
+        register("huawei") {
             dimension "service"
-
         }
-        free {
+        register("free") {
             dimension "type"
-
         }
-        paid {
+        register("paid") {
             dimension "type"
-
         }
     }
 }
@@ -146,8 +142,6 @@ tasks.register("hello") {
     }
 }
 
-def someBoolean = false
-
 tasks.register("clearHello") {
     onlyIf {
         someBoolean
@@ -185,17 +179,20 @@ tasks.named("proxy").configure {
     enabled = false
 }
 
+tasks.named("preBuild").configure {
+    enabled = false
+}
 //------
 
 
-tasks.register("hello") {
+/*tasks.register("hello") {
     doLast {
         println "Hello world!"
     }
     doFirst {
         println "So"
     }
-}
+}*/
 
 tasks.register("challenge") {
     doFirst {
